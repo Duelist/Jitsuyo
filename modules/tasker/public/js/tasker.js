@@ -1,19 +1,33 @@
 /*jslint indent: 2 */
 
-(function () {
+var Tasker = (function () {
   "use strict";
 
   var tasks, validateTask;
 
-  tasks = [];
+  tasks = {
+    current: [],
+    recurring: []
+  };
 
+  /**
+   * TODO
+   * Task: id, name, schedule
+   * Schedule: due date, due time
+   */
   validateTask = function (task) {
-    return true;
+    return task;
   };
 
   return {
+    getCurrentTasks: function () {
+      return tasks.current;
+    },
+    getRecurringTasks: function () {
+      return tasks.recurring;
+    },
     addTask: function (task) {
-      task.push(task);
+      tasks.current.push(validateTask(task));
     },
     removeTask: function () {
       return false;
