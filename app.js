@@ -1,7 +1,10 @@
-var fs = require('fs');
-var express = require('express');
-var path = require('path');
-var app = express();
+var fs = require('fs'),
+  express = require('express'),
+  path = require('path'),
+  app = express();
+
+app.use('/static', express.static(path.join(__dirname, '/bower_components/bootstrap/dist')));
+app.use('/static/js', express.static(path.join(__dirname, '/bower_components/jquery/dist')));
 
 var module_dir = path.join(__dirname, '/modules');
 fs.readdirSync(module_dir).forEach(function(file) {
@@ -9,6 +12,10 @@ fs.readdirSync(module_dir).forEach(function(file) {
   fs.stat(module_path, function (err, stats) {
     app.use(require(module_path));
   });
+});
+
+app.get('/', function(req, res) {
+  res.redirect('/dashboard');
 });
 
 app.listen(3000);

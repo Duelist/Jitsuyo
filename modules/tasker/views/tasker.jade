@@ -1,14 +1,21 @@
-doctype html
-html
-  head
-    title = Tasker
-  body
-    h1 Tasker
-    h2 Current Tasks
-    ul.current-tasks
-    input.hide
-    button.btn.add-current-task
-      | Add Task
-    script(src = "/static/js/tasker.js")
-    script(type = "text/javascript").
-      console.log(Tasker);
+extends ../../dashboard/views/main
+
+block head
+  title
+    | Tasker
+
+block content
+  .container
+    .row
+      .col-md-12
+        h1 Tasker
+    .row
+      .col-md-12
+        h2 Current Tasks
+        ul.current-tasks
+        input.current-task-input.hide
+        button.btn.add-current-task
+          | Add Task
+  script(src = "/static/js/tasker.js")
+  script(type = "text/javascript").
+    console.log(Tasker);
