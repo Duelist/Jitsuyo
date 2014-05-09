@@ -1,4 +1,4 @@
-extends main
+extends extends/layout
 
 block head
   title
@@ -6,7 +6,7 @@ block head
 
 block content
   h1
-    | Jitsuyo
+    | Dashboard
   ul
     li
       a(href = "/example")
@@ -14,3 +14,6 @@ block content
     li
       a(href = "/tasker")
         | Tasker
+
+block includes
+  include includes/includes

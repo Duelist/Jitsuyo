@@ -1,7 +1,12 @@
-doctype html
-html
-  head
-    title = Example
-  body
-    h1 Example Module
-    p This is an example module.
+extends ../../dashboard/views/extends/layout
+
+block head
+  title
+    | Example
+
+block content
+  h1 Example Module
+  p This is an example module.
+
+block includes
+  include ../../dashboard/views/includes/includes

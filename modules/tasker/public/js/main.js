@@ -6,8 +6,10 @@
   "use strict";
 
   $(document).ready(function () {
-    $(".btn.add-current-task").on("click", function () {
+    $(".btn.add-task-btn").on("click", function () {
       console.log("Add task");
+      $(".add-task").toggleClass("hide");
+      return false;
     });
   });
 }());

@@ -1,4 +1,4 @@
-extends ../../dashboard/views/main
+extends ../../dashboard/views/extends/layout
 
 block head
   title
@@ -13,9 +13,16 @@ block content
       .col-md-12
         h2 Current Tasks
         ul.current-tasks
-        input.current-task-input.hide
-        button.btn.add-current-task
+        form.form-horizontal.add-task.hide(role = "form")
+          .form-group
+            label.col-sm-2.control-label(for = "task_name_input")
+              | Name
+            .col-sm-10
+              input#task_name_input.form-control(type = "text", placeholder = "Name")
+        button.btn.add-task-btn
           | Add Task
+
+block includes
+  include ../../dashboard/views/includes/includes
   script(src = "/static/js/tasker.js")
-  script(type = "text/javascript").
-    console.log(Tasker);
+  script(src = "/static/js/main.js")
