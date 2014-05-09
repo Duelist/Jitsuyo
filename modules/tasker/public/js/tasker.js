@@ -5,32 +5,34 @@ var Tasker = (function () {
 
   var tasks, validateTask;
 
-  tasks = {
-    current: [],
-    recurring: []
-  };
+  tasks = [
+    {
+      name: "Example task",
+      schedule: {
+        "date": "2014-05-20",
+        "time": "0900"
+      }
+    }
+  ];
 
   /**
    * TODO
-   * Task: id, name, schedule
-   * Schedule: due date, due time
    */
   validateTask = function (task) {
     return task;
   };
 
   return {
-    getCurrentTasks: function () {
-      return tasks.current;
-    },
-    getRecurringTasks: function () {
-      return tasks.recurring;
+    getTasks: function () {
+      return tasks;
     },
     addTask: function (task) {
-      tasks.current.push(validateTask(task));
+      tasks.push(validateTask(task));
+      return tasks;
     },
-    removeTask: function () {
-      return false;
+    removeTask: function (id) {
+      tasks.splice(id, 1);
+      return tasks;
     }
   };
 }());
