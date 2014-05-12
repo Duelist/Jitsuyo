@@ -8,6 +8,7 @@ var Tasker = (function () {
   tasks = [
     {
       name: "Example task",
+      desc: "",
       schedule: {
         "date": "2014-05-20",
         "time": "0900"

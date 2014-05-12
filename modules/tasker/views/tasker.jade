@@ -14,12 +14,63 @@ block content
         h2 Current Tasks
         ul.current-tasks
         form.form-horizontal.add-task.hide(role = "form")
-          .form-group
+          .form-group.task-name
             label.col-sm-2.control-label(for = "task_name_input")
               | Name
-            .col-sm-10
+            .col-sm-3
               input#task_name_input.form-control(type = "text", placeholder = "Name")
-        button.btn.add-task-btn
+          .form-group.task-desc
+            label.col-sm-2.control-label(for = "task_desc_textarea")
+              | Description
+            .col-sm-5
+              textarea#task_desc_textarea.form-control(type = "text", placeholder = "Description", rows = 3)
+          .form-group.task-date
+            label.col-sm-2.control-label(for = "task_date_input")
+              | Due date
+            .col-sm-3
+              input#task_date_input.form-control(type = "text", placeholder = "DD/MM/YYYY")
+          .form-group.task-time
+            label.col-sm-2.control-label(for = "task_time_input")
+              | Due date
+            .col-sm-3
+              input#task_time_input.form-control(type = "text", placeholder = "#### (24h)")
+          .form-group.task-recurring
+            .col-sm-offset-2.col-sm-3
+              .checkbox
+                label
+                  input#task_recurring_checkbox(type = "Checkbox")
+                  | Recurring?
+          .form-group.task-recurring-details.hide
+            .col-sm-offset-2.col-sm-5
+              label.checkbox-inline
+                input#task_recurring_details_monday(type = "Checkbox", value = "Monday")
+                | Mon
+              label.checkbox-inline
+                input#task_recurring_details_tuesday(type = "Checkbox", value = "Tuesday")
+                | Tue
+              label.checkbox-inline
+                input#task_recurring_details_wednesday(type = "Checkbox", value = "Wednesday")
+                | Wed
+              label.checkbox-inline
+                input#task_recurring_details_thursday(type = "Checkbox", value = "Thursday")
+                | Thu
+              label.checkbox-inline
+                input#task_recurring_details_friday(type = "Checkbox", value = "Friday")
+                | Fri
+              label.checkbox-inline
+                input#task_recurring_details_saturday(type = "Checkbox", value = "Saturday")
+                | Sat
+              label.checkbox-inline
+                input#task_recurring_details_sunday(type = "Checkbox", value = "Sunday")
+                | Sun
+          .form-group.task-controls
+            .col-sm-offset-2.col-sm-5
+              button#task_cancel_button.btn
+                | Cancel
+              | &nbsp;
+              button#task_add_button.btn.btn-success
+                | Add
+        button#add_task_button.btn.add-task-btn
           | Add Task
 
 block includes
