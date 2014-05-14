@@ -1,4 +1,5 @@
-/*jslint indent: 2 */
+/*jslint indent: 2 browser: true devel: true */
+/*global $ */
 
 var Tasker = (function () {
   "use strict";
@@ -29,6 +30,17 @@ var Tasker = (function () {
     },
     addTask: function (task) {
       tasks.push(validateTask(task));
+      $.ajax({
+        url: "/tasker",
+        type: "POST",
+        data: validateTask(task),
+        success: function (data) {
+          console.log(data);
+        },
+        error: function (data) {
+          console.log(data);
+        }
+      });
       return tasks;
     },
     removeTask: function (id) {
