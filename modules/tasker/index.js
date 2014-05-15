@@ -13,6 +13,16 @@ app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'jade');
 app.use('/static', express.static(path.join(__dirname, '/public')));
 
+function saveTask(task, client) {
+  console.log(JSON.stringify(task));
+  /*
+  client.rpush('tasks', JSON.stringify(task), function (err, reply) {
+    console.log("Task added.");
+    console.log(reply);
+  });
+  */
+}
+
 router.use(function (req, res, next) {
   console.log(req['method'] + " " + req['url']);
   next();
@@ -23,6 +33,7 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
+  saveTask(req['data'], redis_client);
   res.render('tasker');
 });
 

@@ -29,11 +29,12 @@ var Tasker = (function () {
       return tasks;
     },
     addTask: function (task) {
-      tasks.push(validateTask(task));
+      var validated_task = validateTask(task);
+      tasks.push(validated_task);
       $.ajax({
         url: "/tasker",
         type: "POST",
-        data: validateTask(task),
+        data: validated_task,
         success: function (data) {
           console.log(data);
         },
