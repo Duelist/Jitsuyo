@@ -4,20 +4,24 @@
 var Tasker = (function () {
   "use strict";
 
-  var tasks, validateTask;
+  var validateTask;
 
-  tasks = [
+  /*
+    Task Format
     {
       name: "Example task",
       desc: "",
-      schedule: {
-        "date": "2014-05-20",
-        "time": "0900"
-      }
+      date: "2014-05-20",
+      time: "0900",
+      recurring: "on",
+      recurring_days: [
+        "Monday",
+        "Tuesday"
+      ]
     }
-  ];
+  */
 
-  /**
+  /*
    * TODO
    */
   validateTask = function (task) {
@@ -26,27 +30,28 @@ var Tasker = (function () {
 
   return {
     getTasks: function () {
-      return tasks;
+      return false;
     },
     addTask: function (task) {
-      var validated_task = validateTask(task);
-      tasks.push(validated_task);
       $.ajax({
         url: "/tasker",
         type: "POST",
-        data: validated_task,
-        success: function (data) {
-          console.log(data);
+        data: JSON.stringify(validateTask(task)),
+        contentType: "application/json",
+        beforeSend: function () {
+          // Disable buttons
+          // Indicate loading
         },
-        error: function (data) {
-          console.log(data);
+        success: function (response) {
+          return response;
+        },
+        error: function (response) {
+          return response;
         }
       });
-      return tasks;
     },
-    removeTask: function (id) {
-      tasks.splice(id, 1);
-      return tasks;
+    removeTask: function () {
+      return false;
     }
   };
 }());

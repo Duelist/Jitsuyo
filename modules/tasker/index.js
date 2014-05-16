@@ -1,4 +1,5 @@
 var express = require('express'),
+    body_parser = require('body-parser'),
     path = require('path'),
     redis = require('redis'),
     redis_client = redis.createClient(),
@@ -11,16 +12,28 @@ redis_client.on('error', function(err) {
 
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'jade');
-app.use('/static', express.static(path.join(__dirname, '/public')));
 
-function saveTask(task, client) {
-  console.log(JSON.stringify(task));
-  /*
-  client.rpush('tasks', JSON.stringify(task), function (err, reply) {
-    console.log("Task added.");
+app.use('/static', express.static(path.join(__dirname, '/public')));
+app.use(body_parser.json());
+
+function getTasks(client) {
+  client.lrange('tasks', 0, 1, function (err, reply) {
+    console.log("Tasks found.");
     console.log(reply);
   });
-  */
+}
+
+function saveTask(task, client, response) {
+  redis_client.rpush('tasks', JSON.stringify(task), function (err, reply) {
+    console.log("Task added.");
+    response.send(200, task);
+  });
+}
+
+function removeTask(id, client) {
+  client.lset('tasks', 1, 'deleted', function (err, reply) {
+    console.log("Task " + id + " removed.");
+  });
 }
 
 router.use(function (req, res, next) {
@@ -33,8 +46,7 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-  saveTask(req['data'], redis_client);
-  res.render('tasker');
+  saveTask(req.body, redis_client, res);
 });
 
 app.use('/tasker', router);
