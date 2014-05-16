@@ -7,44 +7,38 @@
 
   $.fn.toJSON = function () {
     var form_json = {},
+      key_name = "",
       form_data = $(this).serializeArray();
 
-    $.each(form_data, function (i, obj) {
-      form_json[obj.name] = obj.value;
+    $.each(form_data, function () {
+      if (this.name.indexOf("[]", this.name.length - 2) !== -1) {
+        key_name = this.name.substring(0, this.name.length - 2);
+
+        if (!form_json.hasOwnProperty(key_name)) {
+          form_json[key_name] = [];
+        }
+
+        form_json[key_name].push(this.value || "");
+      } else {
+        form_json[this.name] = this.value || "";
+      }
     });
 
     return form_json;
   };
 
   $(document).ready(function () {
-    $("#add_task_button").on("click", function (e) {
+    $("#add_task_button").on("click", function () {
       $(".add-task").removeClass("hide");
       $(this).addClass("hide");
-      e.preventDefault();
     });
-    $("#task_cancel_button").on("click", function (e) {
+    $("#task_cancel_button").on("click", function () {
       $(".add-task").addClass("hide");
       $("#add_task_button").removeClass("hide");
-      e.preventDefault();
     });
-    $("#task_add_button").on("click", function (e) {
-      // Validate fields
-      // Submit field data to Tasker
+    $("#task_add_button").on("click", function () {
       var form_data = $("form[name='add_task']").toJSON();
-
-      console.log(form_data);
-
-      /*
-      Tasker.addTask({
-        name: $("#task_name_input").val(),
-        desc: $("#task_desc_textarea").val(),
-        schedule: {
-          "date": $("#task_date_input").val(),
-          "time": $("#task_time_input").val()
-        }
-      });
-      */
-      e.preventDefault();
+      Tasker.addTask(form_data);
     });
     $("#task_recurring_checkbox").on("change", function () {
       if ($("#task_recurring_checkbox:checked").length === 0) {
