@@ -18,59 +18,59 @@ block content
             label.col-sm-2.control-label(for = "task_name_input")
               | Name
             .col-sm-3
-              input#task_name_input.form-control(type = "text", name = "task_name", placeholder = "Name")
+              input#task_name_input.form-control(type = "text", name = "name", placeholder = "Name")
           .form-group.task-desc
             label.col-sm-2.control-label(for = "task_desc_textarea")
               | Description
             .col-sm-5
-              textarea#task_desc_textarea.form-control(type = "text", name = "task_desc", placeholder = "Description", rows = 3)
+              textarea#task_desc_textarea.form-control(type = "text", name = "desc", placeholder = "Description", rows = 3)
           .form-group.task-date
             label.col-sm-2.control-label(for = "task_date_input")
               | Due date
             .col-sm-3
-              input#task_date_input.form-control(type = "text", name = "task_date", placeholder = "DD/MM/YYYY")
+              input#task_date_input.form-control(type = "text", name = "date", placeholder = "DD/MM/YYYY")
           .form-group.task-time
             label.col-sm-2.control-label(for = "task_time_input")
               | Due time
             .col-sm-3
-              input#task_time_input.form-control(type = "text", name = "task_time", placeholder = "#### (24h)")
+              input#task_time_input.form-control(type = "text", name = "time", placeholder = "#### (24h)")
           .form-group.task-recurring
             .col-sm-offset-2.col-sm-3
               .checkbox
                 label
-                  input#task_recurring_checkbox(type = "Checkbox", name = "task_recurring")
+                  input#task_recurring_checkbox(type = "Checkbox", name = "recurring")
                   | Recurring?
           .form-group.task-recurring-details.hide
             .col-sm-offset-2.col-sm-5
               label.checkbox-inline
-                input#task_recurring_details_monday(type = "Checkbox", name = "task_recurring_monday", value = "Monday")
+                input#task_recurring_details_monday(type = "Checkbox", name = "recurring_days[]", value = "Monday")
                 | Mon
               label.checkbox-inline
-                input#task_recurring_details_tuesday(type = "Checkbox", name = "task_recurring_tuesday", value = "Tuesday")
+                input#task_recurring_details_tuesday(type = "Checkbox", name = "recurring_days[]", value = "Tuesday")
                 | Tue
               label.checkbox-inline
-                input#task_recurring_details_wednesday(type = "Checkbox", name = "task_recurring_wednesday", value = "Wednesday")
+                input#task_recurring_details_wednesday(type = "Checkbox", name = "recurring_days[]", value = "Wednesday")
                 | Wed
               label.checkbox-inline
-                input#task_recurring_details_thursday(type = "Checkbox", name = "task_recurring_thursday", value = "Thursday")
+                input#task_recurring_details_thursday(type = "Checkbox", name = "recurring_days[]", value = "Thursday")
                 | Thu
               label.checkbox-inline
-                input#task_recurring_details_friday(type = "Checkbox", name = "task_recurring_friday", value = "Friday")
+                input#task_recurring_details_friday(type = "Checkbox", name = "recurring_days[]", value = "Friday")
                 | Fri
               label.checkbox-inline
-                input#task_recurring_details_saturday(type = "Checkbox", name = "task_recurring_Saturday", value = "Saturday")
+                input#task_recurring_details_saturday(type = "Checkbox", name = "recurring_days[]", value = "Saturday")
                 | Sat
               label.checkbox-inline
-                input#task_recurring_details_sunday(type = "Checkbox", name = "task_recurring_Sunday", value = "Sunday")
+                input#task_recurring_details_sunday(type = "Checkbox", name = "recurring_days[]", value = "Sunday")
                 | Sun
           .form-group.task-controls
             .col-sm-offset-2.col-sm-5
-              button#task_cancel_button.btn
+              button#task_cancel_button.btn(type = "button")
                 | Cancel
               | &nbsp;
-              button#task_add_button.btn.btn-success
+              button#task_add_button.btn.btn-success(type = "button")
                 | Add
-        button#add_task_button.btn.add-task-btn
+        button#add_task_button.btn.add-task-btn(type = "button")
           | Add Task
 
 block includes
