@@ -27,7 +27,22 @@
     return form_json;
   };
 
+  function getTasksCallback(response) {
+    var i,
+      current_task;
+
+    $(".current-tasks").empty();
+    for (i = 0; i < response.length; i += 1) {
+      current_task = $.parseJSON(response[i]);
+      $(".current-tasks").append($("<li>").html(current_task.name));
+    }
+  }
+
   $(document).ready(function () {
+
+    // Initialization
+    Tasker.getTasks(getTasksCallback);
+
     $("#add_task_button").on("click", function () {
       $(".add-task").removeClass("hide");
       $(this).addClass("hide");

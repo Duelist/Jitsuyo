@@ -17,10 +17,20 @@ app.use('/static', express.static(path.join(__dirname, '/public')));
 app.use(body_parser.json());
 
 function getTasks(client, response) {
-  client.get('tasklist', function (err, tasklist) {
+  client.lrange('tasklist', 0, -1, function (err, task_ids) {
+    var i,
+      tasks = [];
+
     console.log("GET TASKS");
-    console.log(tasklist);
-    // response.send(200, tasks);
+    for (i = 0; i < task_ids.length; i++) {
+      client.get('tasks:' + task_ids[i], function (err, task) {
+        tasks.push(task);
+
+        if (tasks.length === task_ids.length) {
+          response.send(200, tasks);
+        }
+      });
+    }
   });
 }
 

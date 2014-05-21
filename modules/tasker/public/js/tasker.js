@@ -4,7 +4,12 @@
 var Tasker = (function () {
   "use strict";
 
-  var validateTask;
+  /*
+   * TODO
+   */
+  var validateTask = function (task) {
+    return task;
+  };
 
   /*
     Task Format
@@ -21,28 +26,14 @@ var Tasker = (function () {
     }
   */
 
-  /*
-   * TODO
-   */
-  validateTask = function (task) {
-    return task;
-  };
-
   return {
-    getTasks: function () {
+    getTasks: function (success_callback) {
       $.ajax({
         url: "/tasker/tasks",
         type: "GET",
-        contentType: "application/json",
-        beforeSend: function () {
-          // Disable buttons
-          // Indicate loading
-        },
-        success: function (response) {
-          console.log(response);
-        },
+        success: success_callback,
         error: function (response) {
-          return response;
+          console.err(response);
         }
       });
     },
@@ -52,15 +43,12 @@ var Tasker = (function () {
         type: "POST",
         data: JSON.stringify(validateTask(task)),
         contentType: "application/json",
-        beforeSend: function () {
-          // Disable buttons
-          // Indicate loading
-        },
         success: function (response) {
           console.log(response);
+          return response;
         },
         error: function (response) {
-          return response;
+          console.err(response);
         }
       });
     },
