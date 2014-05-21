@@ -30,11 +30,25 @@ var Tasker = (function () {
 
   return {
     getTasks: function () {
-      return false;
+      $.ajax({
+        url: "/tasker/tasks",
+        type: "GET",
+        contentType: "application/json",
+        beforeSend: function () {
+          // Disable buttons
+          // Indicate loading
+        },
+        success: function (response) {
+          console.log(response);
+        },
+        error: function (response) {
+          return response;
+        }
+      });
     },
     addTask: function (task) {
       $.ajax({
-        url: "/tasker",
+        url: "/tasker/tasks",
         type: "POST",
         data: JSON.stringify(validateTask(task)),
         contentType: "application/json",
@@ -43,7 +57,7 @@ var Tasker = (function () {
           // Indicate loading
         },
         success: function (response) {
-          return response;
+          console.log(response);
         },
         error: function (response) {
           return response;

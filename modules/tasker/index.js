@@ -16,24 +16,31 @@ app.set('view engine', 'jade');
 app.use('/static', express.static(path.join(__dirname, '/public')));
 app.use(body_parser.json());
 
-function getTasks(client) {
-  client.lrange('tasks', 0, 1, function (err, reply) {
-    console.log("Tasks found.");
-    console.log(reply);
+function getTasks(client, response) {
+  client.get('tasklist', function (err, tasklist) {
+    console.log("GET TASKS");
+    console.log(tasklist);
+    // response.send(200, tasks);
   });
 }
 
 function saveTask(task, client, response) {
-  redis_client.rpush('tasks', JSON.stringify(task), function (err, reply) {
-    console.log("Task added.");
-    response.send(200, task);
+  client.incr('global:taskID', function (err, id) {
+    client.set('tasks:' + id, JSON.stringify(task), function (err, reply) {
+      client.rpush('tasklist', id, function (err, reply) {
+        console.log("ADD TASK");
+        response.send(200, reply);
+      });
+    });
   });
 }
 
 function removeTask(id, client) {
+  /*
   client.lset('tasks', 1, 'deleted', function (err, reply) {
     console.log("Task " + id + " removed.");
   });
+  */
 }
 
 router.use(function (req, res, next) {
@@ -41,11 +48,15 @@ router.use(function (req, res, next) {
   next();
 });
 
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
   res.render('tasker');
 });
 
-router.post('/', function(req, res) {
+router.get('/tasks', function (req, res) {
+  getTasks(redis_client, res);
+});
+
+router.post('/tasks', function (req, res) {
   saveTask(req.body, redis_client, res);
 });
 
