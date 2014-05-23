@@ -37,16 +37,13 @@ var Tasker = (function () {
         }
       });
     },
-    addTask: function (task) {
+    addTask: function (task, success_callback) {
       $.ajax({
         url: "/tasker/tasks",
         type: "POST",
         data: JSON.stringify(validateTask(task)),
         contentType: "application/json",
-        success: function (response) {
-          console.log(response);
-          return response;
-        },
+        success: success_callback,
         error: function (response) {
           console.err(response);
         }

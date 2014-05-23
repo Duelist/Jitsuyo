@@ -39,7 +39,7 @@ function saveTask(task, client, response) {
     client.set('tasks:' + id, JSON.stringify(task), function (err, reply) {
       client.rpush('tasklist', id, function (err, reply) {
         console.log("ADD TASK");
-        response.send(200, reply);
+        getTasks(client, response);
       });
     });
   });

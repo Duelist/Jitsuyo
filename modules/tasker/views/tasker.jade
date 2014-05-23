@@ -13,65 +13,73 @@ block content
       .col-md-12
         h2 Current Tasks
         ul.current-tasks
-        form.form-horizontal.add-task.hide(name = "add_task", role = "form")
-          .form-group.task-name
-            label.col-sm-2.control-label(for = "task_name_input")
-              | Name
-            .col-sm-3
-              input#task_name_input.form-control(type = "text", name = "name", placeholder = "Name")
-          .form-group.task-desc
-            label.col-sm-2.control-label(for = "task_desc_textarea")
-              | Description
-            .col-sm-5
-              textarea#task_desc_textarea.form-control(type = "text", name = "desc", placeholder = "Description", rows = 3)
-          .form-group.task-date
-            label.col-sm-2.control-label(for = "task_date_input")
-              | Due date
-            .col-sm-3
-              input#task_date_input.form-control(type = "text", name = "date", placeholder = "DD/MM/YYYY")
-          .form-group.task-time
-            label.col-sm-2.control-label(for = "task_time_input")
-              | Due time
-            .col-sm-3
-              input#task_time_input.form-control(type = "text", name = "time", placeholder = "#### (24h)")
-          .form-group.task-recurring
-            .col-sm-offset-2.col-sm-3
-              .checkbox
-                label
-                  input#task_recurring_checkbox(type = "Checkbox", name = "recurring")
-                  | Recurring?
-          .form-group.task-recurring-details.hide
-            .col-sm-offset-2.col-sm-5
-              label.checkbox-inline
-                input#task_recurring_details_monday(type = "Checkbox", name = "recurring_days[]", value = "Monday")
-                | Mon
-              label.checkbox-inline
-                input#task_recurring_details_tuesday(type = "Checkbox", name = "recurring_days[]", value = "Tuesday")
-                | Tue
-              label.checkbox-inline
-                input#task_recurring_details_wednesday(type = "Checkbox", name = "recurring_days[]", value = "Wednesday")
-                | Wed
-              label.checkbox-inline
-                input#task_recurring_details_thursday(type = "Checkbox", name = "recurring_days[]", value = "Thursday")
-                | Thu
-              label.checkbox-inline
-                input#task_recurring_details_friday(type = "Checkbox", name = "recurring_days[]", value = "Friday")
-                | Fri
-              label.checkbox-inline
-                input#task_recurring_details_saturday(type = "Checkbox", name = "recurring_days[]", value = "Saturday")
-                | Sat
-              label.checkbox-inline
-                input#task_recurring_details_sunday(type = "Checkbox", name = "recurring_days[]", value = "Sunday")
-                | Sun
-          .form-group.task-controls
-            .col-sm-offset-2.col-sm-5
-              button#task_cancel_button.btn(type = "button")
-                | Cancel
-              | &nbsp;
-              button#task_add_button.btn.btn-success(type = "button")
-                | Add
-        button#add_task_button.btn.add-task-btn(type = "button")
-          | Add Task
+          li
+            .add-task-btn(data-toggle = "modal", data-target = "#add_task_modal")
+              | +
+        #add_task_modal.modal.fade(tabindex = "-1", role = "dialog", aria-labelledby = "add_task_modal_label", aria-hidden = "true")
+          .modal-dialog
+            .modal-content
+              .modal-header
+                button.close(type = "button", data-dismiss = "modal", aria-hidden = "true")
+                  | &times;
+                h4#add_task_modal_label.modal-title
+                  | Add Task
+              .modal-body
+                form.form-horizontal.add-task.hide(name = "add_task", role = "form")
+                  .form-group.task-name
+                    label.col-sm-2.control-label(for = "task_name_input")
+                      | Name
+                    .col-sm-6
+                      input#task_name_input.form-control(type = "text", name = "name", placeholder = "Name")
+                  .form-group.task-desc
+                    label.col-sm-2.control-label(for = "task_desc_textarea")
+                      | Description
+                    .col-sm-8
+                      textarea#task_desc_textarea.form-control(type = "text", name = "desc", placeholder = "Description", rows = 3)
+                  .form-group.task-date
+                    label.col-sm-2.control-label(for = "task_date_input")
+                      | Due date
+                    .col-sm-6
+                      input#task_date_input.form-control(type = "text", name = "date", placeholder = "DD/MM/YYYY")
+                  .form-group.task-time
+                    label.col-sm-2.control-label(for = "task_time_input")
+                      | Due time
+                    .col-sm-6
+                      input#task_time_input.form-control(type = "text", name = "time", placeholder = "#### (24h)")
+                  .form-group.task-recurring
+                    .col-sm-offset-2.col-sm-6
+                      .checkbox
+                        label
+                          input#task_recurring_checkbox(type = "Checkbox", name = "recurring")
+                          | Recurring?
+                  .form-group.task-recurring-details.hide
+                    .col-sm-offset-2.col-sm-8
+                      label.checkbox-inline
+                        input#task_recurring_details_monday(type = "Checkbox", name = "recurring_days[]", value = "Monday")
+                        | Mon
+                      label.checkbox-inline
+                        input#task_recurring_details_tuesday(type = "Checkbox", name = "recurring_days[]", value = "Tuesday")
+                        | Tue
+                      label.checkbox-inline
+                        input#task_recurring_details_wednesday(type = "Checkbox", name = "recurring_days[]", value = "Wednesday")
+                        | Wed
+                      label.checkbox-inline
+                        input#task_recurring_details_thursday(type = "Checkbox", name = "recurring_days[]", value = "Thursday")
+                        | Thu
+                      label.checkbox-inline
+                        input#task_recurring_details_friday(type = "Checkbox", name = "recurring_days[]", value = "Friday")
+                        | Fri
+                      label.checkbox-inline
+                        input#task_recurring_details_saturday(type = "Checkbox", name = "recurring_days[]", value = "Saturday")
+                        | Sat
+                      label.checkbox-inline
+                        input#task_recurring_details_sunday(type = "Checkbox", name = "recurring_days[]", value = "Sunday")
+                        | Sun
+              .modal-footer
+                button.btn.btn-default(type = "button", data-dismiss = "modal")
+                  | Cancel
+                button#task_add_button.btn.btn-success(type = "button")
+                  | Add
 
 block includes
   include ../../dashboard/views/includes/includes

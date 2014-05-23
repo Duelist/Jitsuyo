@@ -27,33 +27,45 @@
     return form_json;
   };
 
-  function getTasksCallback(response) {
+  function refreshTasksCallback(response) {
     var i,
       current_task;
 
     $(".current-tasks").empty();
     for (i = 0; i < response.length; i += 1) {
       current_task = $.parseJSON(response[i]);
-      $(".current-tasks").append($("<li>").html(current_task.name));
+      $(".current-tasks").append($("<li>")
+                         .addClass("task")
+                         .html(current_task.name));
     }
+    $(".current-tasks").append($("<li>")
+                       .append($("<div>"))
+                       .addClass("add-task-btn")
+                       .attr("data-toggle", "modal")
+                       .attr("data-target", "#add_task_modal")
+                       .html("+"));
+  }
+
+  function addTaskCallback(response) {
+    refreshTasksCallback(response);
+    $(".add-task").addClass("hide");
+    $("form[name='add_task']").trigger("reset");
   }
 
   $(document).ready(function () {
 
     // Initialization
-    Tasker.getTasks(getTasksCallback);
+    Tasker.getTasks(refreshTasksCallback);
 
-    $("#add_task_button").on("click", function () {
+    $(document).on("click", ".add-task-btn", function () {
       $(".add-task").removeClass("hide");
-      $(this).addClass("hide");
     });
     $("#task_cancel_button").on("click", function () {
       $(".add-task").addClass("hide");
-      $("#add_task_button").removeClass("hide");
     });
     $("#task_add_button").on("click", function () {
       var form_data = $("form[name='add_task']").toJSON();
-      Tasker.addTask(form_data);
+      Tasker.addTask(form_data, addTaskCallback);
     });
     $("#task_recurring_checkbox").on("change", function () {
       if ($("#task_recurring_checkbox:checked").length === 0) {
