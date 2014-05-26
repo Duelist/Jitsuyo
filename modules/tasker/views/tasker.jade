@@ -13,9 +13,6 @@ block content
       .col-md-12
         h2 Current Tasks
         ul.current-tasks
-          li
-            .add-task-btn(data-toggle = "modal", data-target = "#add_task_modal")
-              | +
         #add_task_modal.modal.fade(tabindex = "-1", role = "dialog", aria-labelledby = "add_task_modal_label", aria-hidden = "true")
           .modal-dialog
             .modal-content
@@ -25,7 +22,7 @@ block content
                 h4#add_task_modal_label.modal-title
                   | Add Task
               .modal-body
-                form.form-horizontal.add-task.hide(name = "add_task", role = "form")
+                form.form-horizontal.add-task-form(name = "add_task", role = "form")
                   .form-group.task-name
                     label.col-sm-2.control-label(for = "task_name_input")
                       | Name
@@ -76,12 +73,15 @@ block content
                         input#task_recurring_details_sunday(type = "Checkbox", name = "recurring_days[]", value = "Sunday")
                         | Sun
               .modal-footer
-                button.btn.btn-default(type = "button", data-dismiss = "modal")
+                button.btn.btn-default.close-task-modal-btn.hide(type = "button", data-dismiss = "modal")
+                  | Close
+                button.btn.btn-default.cancel-task-modal-btn(type = "button", data-dismiss = "modal")
                   | Cancel
-                button#task_add_button.btn.btn-success(type = "button")
+                button.btn.btn-success.add-task-modal-btn(type = "button")
                   | Add
 
 block includes
   include ../../dashboard/views/includes/includes
+  script(src = "/static/js/moment.min.js")
   script(src = "/static/js/tasker.js")
   script(src = "/static/js/main.js")

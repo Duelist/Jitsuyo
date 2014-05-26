@@ -27,7 +27,7 @@
     return form_json;
   };
 
-  function refreshTasksCallback(response) {
+  function getTasksCallback(response) {
     var i,
       current_task;
 
@@ -35,37 +35,51 @@
     for (i = 0; i < response.length; i += 1) {
       current_task = $.parseJSON(response[i]);
       $(".current-tasks").append($("<li>")
-                         .addClass("task")
-                         .html(current_task.name));
+                           .append($("<div>")
+                           .addClass("task")
+                           .append(current_task.name)
+                           .append("&nbsp;")
+                           .append($("<div>")
+                             .addClass("task-controls")
+                             .addClass("hide")
+                             .append($("<span>")
+                               .addClass("glyphicon")
+                               .addClass("glyphicon-pencil"))
+                             .append("&nbsp;|&nbsp;")
+                             .append($("<span>")
+                               .addClass("glyphicon")
+                               .addClass("glyphicon-remove")))));
     }
     $(".current-tasks").append($("<li>")
                        .append($("<div>"))
-                       .addClass("add-task-btn")
+                       .addClass("add-task")
                        .attr("data-toggle", "modal")
                        .attr("data-target", "#add_task_modal")
                        .html("+"));
   }
 
-  function addTaskCallback(response) {
-    refreshTasksCallback(response);
-    $(".add-task").addClass("hide");
+  function addTaskSuccessCallback(response) {
+    getTasksCallback(response);
+    // $(".add-task-form").addClass("hide");
+    $("#add_task_modal").modal("hide");
     $("form[name='add_task']").trigger("reset");
+  }
+
+  function addTaskErrorCallback(validation) {
+    
   }
 
   $(document).ready(function () {
 
     // Initialization
-    Tasker.getTasks(refreshTasksCallback);
+    Tasker.getTasks(getTasksCallback);
 
-    $(document).on("click", ".add-task-btn", function () {
-      $(".add-task").removeClass("hide");
+    $(".current-tasks").on("mouseover", ".task", function () {
+      $(".task-controls").removeClass("hide");
     });
-    $("#task_cancel_button").on("click", function () {
-      $(".add-task").addClass("hide");
-    });
-    $("#task_add_button").on("click", function () {
+    $(".add-task-modal-btn").on("click", function () {
       var form_data = $("form[name='add_task']").toJSON();
-      Tasker.addTask(form_data, addTaskCallback);
+      Tasker.addTask(form_data, addTaskSuccessCallback);
     });
     $("#task_recurring_checkbox").on("change", function () {
       if ($("#task_recurring_checkbox:checked").length === 0) {
