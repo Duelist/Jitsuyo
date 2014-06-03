@@ -36,26 +36,15 @@
       current_task = $.parseJSON(response[i]);
       $(".current-tasks").append($("<li>")
                            .append($("<div>")
-                           .addClass("task")
-                           .append(current_task.name)
-                           .append("&nbsp;")
-                           .append($("<div>")
-                             .addClass("task-controls")
-                             .addClass("hide")
-                             .append($("<span>")
-                               .addClass("glyphicon")
-                               .addClass("glyphicon-pencil"))
-                             .append("&nbsp;|&nbsp;")
-                             .append($("<span>")
-                               .addClass("glyphicon")
-                               .addClass("glyphicon-remove")))));
+                             .addClass("task")
+                             .append(current_task.name)));
     }
     $(".current-tasks").append($("<li>")
-                       .append($("<div>"))
-                       .addClass("add-task")
-                       .attr("data-toggle", "modal")
-                       .attr("data-target", "#add_task_modal")
-                       .html("+"));
+                         .append($("<div>")
+                           .addClass("add-task")
+                           .attr("data-toggle", "modal")
+                           .attr("data-target", "#add_task_modal")
+                           .html("+")));
   }
 
   function addTaskSuccessCallback(response) {
@@ -66,20 +55,26 @@
   }
 
   function addTaskErrorCallback(validation) {
-    
+    var i;
+
+    for (i = 0; i < validation.errors.length; i += 1) {
+      console.log(validation.errors[i]);
+    }
   }
 
   $(document).ready(function () {
 
     // Initialization
     Tasker.getTasks(getTasksCallback);
+    $(".datepicker").pickadate();
+    $(".timepicker").pickatime();
 
     $(".current-tasks").on("mouseover", ".task", function () {
       $(".task-controls").removeClass("hide");
     });
     $(".add-task-modal-btn").on("click", function () {
       var form_data = $("form[name='add_task']").toJSON();
-      Tasker.addTask(form_data, addTaskSuccessCallback);
+      Tasker.addTask(form_data, addTaskSuccessCallback, addTaskErrorCallback);
     });
     $("#task_recurring_checkbox").on("change", function () {
       if ($("#task_recurring_checkbox:checked").length === 0) {
