@@ -8,38 +8,27 @@ var Tasker = (function () {
    * TODO
    */
   var validateTask = function (task) {
-    var current_error = {},
-      errors = [],
+    var errors = [],
       status = 0;
 
     if (task.name === "") {
-      current_error.field = "name";
-      current_error.message = "Name required.";
-      errors.push(current_error);
+      errors.push({"field": "name", "messsage": "Name required."});
     }
 
     if (!moment(task.date, "DD/MM/YYYY", true).isValid()) {
-      current_error.field = "date";
-      current_error.message = "Invalid date format.";
-      errors.push(current_error);
+      errors.push({"field": "date", "message": "Invalid date format."});
     }
 
     if (task.time.length !== 4) {
-      current_error.field = "time";
-      current_error.message = "Invalid time format.";
-      errors.push(current_error);
+      errors.push({"field": "time", "message": "Invalid time format."});
     }
 
     if (isNaN(task.time)) {
-      current_error.field = "time";
-      current_error.message = "Time must be a number in 24h format.";
-      errors.push(current_error);
+      errors.push({"field": "time", "message": "Time must be a number in 24h format."});
     }
 
     if (parseInt(task.time, 10) > 2400 || parseInt(task.time, 10) < 0) {
-      current_error.field = "time";
-      current_error.message = "Invalid time.";
-      errors.push(current_error);
+      errors.push({"field": "time", "message": "Invalid time."});
     }
 
     if (errors.length === 0) {
@@ -81,7 +70,7 @@ var Tasker = (function () {
         $.ajax({
           url: "/tasker/tasks",
           type: "POST",
-          data: JSON.stringify(validateTask(task)),
+          data: JSON.stringify(task),
           contentType: "application/json",
           success: success_callback
         });

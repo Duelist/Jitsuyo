@@ -22,6 +22,11 @@ function getTasks(client, response) {
       tasks = [];
 
     console.log("GET TASKS");
+
+    if (task_ids.length === 0) {
+      response.send(200, tasks);
+    }
+
     for (i = 0; i < task_ids.length; i++) {
       client.get('tasks:' + task_ids[i], function (err, task) {
         tasks.push(task);
