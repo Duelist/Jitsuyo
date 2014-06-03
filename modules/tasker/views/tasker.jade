@@ -37,12 +37,12 @@ block content
                     label.col-sm-2.control-label(for = "task_date_input")
                       | Due date
                     .col-sm-6
-                      input#task_date_input.form-control(type = "text", name = "date", placeholder = "DD/MM/YYYY")
+                      input#task_date_input.form-control.datepicker(type = "text", name = "date", placeholder = "DD/MM/YYYY")
                   .form-group.task-time
                     label.col-sm-2.control-label(for = "task_time_input")
                       | Due time
                     .col-sm-6
-                      input#task_time_input.form-control(type = "text", name = "time", placeholder = "#### (24h)")
+                      input#task_time_input.form-control.timepicker(type = "text", name = "time", placeholder = "#### (24h)")
                   .form-group.task-recurring
                     .col-sm-offset-2.col-sm-6
                       .checkbox
@@ -83,5 +83,8 @@ block content
 block includes
   include ../../dashboard/views/includes/includes
   script(src = "/static/js/moment.min.js")
+  script(src = "/static/js/picker.js")
+  script(src = "/static/js/picker.date.js")
+  script(src = "/static/js/picker.time.js")
   script(src = "/static/js/tasker.js")
   script(src = "/static/js/main.js")
