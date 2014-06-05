@@ -28,17 +28,18 @@
   };
 
   function getTasksCallback(response) {
-    var i,
-      current_task;
+    var current_task;
 
     $(".current-tasks").empty();
-    for (i = 0; i < response.length; i += 1) {
-      current_task = $.parseJSON(response[i]);
+
+    _.each(response, function (task) {
+      current_task = $.parseJSON(task);
       $(".current-tasks").append($("<li>")
                            .append($("<div>")
                              .addClass("task")
                              .append(current_task.name)));
-    }
+    });
+
     $(".current-tasks").append($("<li>")
                          .append($("<div>")
                            .addClass("add-task")
@@ -55,18 +56,18 @@
   }
 
   function addTaskErrorCallback(validation) {
-    var i;
-
-    for (i = 0; i < validation.errors.length; i += 1) {
-      console.log(validation.errors[i]);
-    }
+    _.each(validation, function (error) {
+      console.log(error);
+    });
   }
 
   $(document).ready(function () {
 
     // Initialization
     Tasker.getTasks(getTasksCallback);
-    $(".datepicker").pickadate();
+    $(".datepicker").pickadate({
+      "format": "dd/mm/yyyy"
+    });
     $(".timepicker").pickatime();
 
     $(".current-tasks").on("mouseover", ".task", function () {

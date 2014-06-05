@@ -19,16 +19,8 @@ var Tasker = (function () {
       errors.push({"field": "date", "message": "Invalid date format."});
     }
 
-    if (task.time.length !== 4) {
+    if (!moment(task.time, "h:m a", true).isValid()) {
       errors.push({"field": "time", "message": "Invalid time format."});
-    }
-
-    if (isNaN(task.time)) {
-      errors.push({"field": "time", "message": "Time must be a number in 24h format."});
-    }
-
-    if (parseInt(task.time, 10) > 2400 || parseInt(task.time, 10) < 0) {
-      errors.push({"field": "time", "message": "Invalid time."});
     }
 
     if (errors.length === 0) {
@@ -44,9 +36,9 @@ var Tasker = (function () {
     Task Format
     {
       name: "Example task",
-      desc: "",
+      desc: "Example description",
       date: "2014-05-20",
-      time: "0900",
+      time: "9:00 AM",
       recurring: "on",
       recurring_days: [
         "Monday",
