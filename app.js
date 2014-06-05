@@ -4,9 +4,11 @@ var fs = require('fs'),
   app = express();
 
 app.use('/static', express.static(path.join(__dirname, '/bower_components/bootstrap/dist')));
+app.use('/static/css', express.static(path.join(__dirname, '/bower_components/pickadate/lib/themes')));
 app.use('/static/js', express.static(path.join(__dirname, '/bower_components/jquery/dist')));
 app.use('/static/js', express.static(path.join(__dirname, '/bower_components/momentjs/min/')));
 app.use('/static/js', express.static(path.join(__dirname, '/bower_components/pickadate/lib/compressed/')));
+app.use('/static/js', express.static(path.join(__dirname, '/bower_components/underscore/')));
 
 var module_dir = path.join(__dirname, '/modules');
 fs.readdirSync(module_dir).forEach(function(file) {
