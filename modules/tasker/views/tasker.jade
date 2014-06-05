@@ -4,6 +4,12 @@ block head
   title
     | Tasker
 
+block css-includes
+  include ../../dashboard/views/includes/css-includes
+  link(rel = "stylesheet", href = "/static/css/default.css")
+  link(rel = "stylesheet", href = "/static/css/default.date.css")
+  link(rel = "stylesheet", href = "/static/css/default.time.css")
+
 block content
   .container
     .row
@@ -36,13 +42,10 @@ block content
                   .form-group.task-date
                     label.col-sm-2.control-label(for = "task_date_input")
                       | Due date
-                    .col-sm-6
-                      input#task_date_input.form-control.datepicker(type = "text", name = "date", placeholder = "DD/MM/YYYY")
-                  .form-group.task-time
-                    label.col-sm-2.control-label(for = "task_time_input")
-                      | Due time
-                    .col-sm-6
-                      input#task_time_input.form-control.timepicker(type = "text", name = "time", placeholder = "#### (24h)")
+                    .col-sm-4
+                      input#task_date_input.form-control.datepicker(type = "text", name = "date", placeholder = "Click here")
+                    .col-sm-3
+                      input#task_time_input.form-control.timepicker(type = "text", name = "time", placeholder = "Click here")
                   .form-group.task-recurring
                     .col-sm-offset-2.col-sm-6
                       .checkbox
@@ -80,8 +83,8 @@ block content
                 button.btn.btn-success.add-task-modal-btn(type = "button")
                   | Add
 
-block includes
-  include ../../dashboard/views/includes/includes
+block js-includes
+  include ../../dashboard/views/includes/js-includes
   script(src = "/static/js/moment.min.js")
   script(src = "/static/js/picker.js")
   script(src = "/static/js/picker.date.js")

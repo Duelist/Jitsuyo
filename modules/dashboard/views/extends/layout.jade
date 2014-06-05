@@ -4,8 +4,8 @@ html
     meta(charset = "utf-8")
     meta(name = "viewport", content = "width=device-width, initial-scale=1")
     block head
-    link(rel = "stylesheet", href = "/static/css/bootstrap.min.css")
+    block css-includes
   body
     .content
       block content
-    block includes
+    block js-includes
