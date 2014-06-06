@@ -35,6 +35,7 @@ var Tasker = (function () {
   /*
     Task Format
     {
+      id: 0,
       name: "Example task",
       desc: "Example description",
       date: "2014-05-20",
@@ -70,8 +71,13 @@ var Tasker = (function () {
         error_callback(validation);
       }
     },
-    removeTask: function () {
-      return false;
+    removeTask: function (id, success_callback) {
+      $.ajax({
+        url: "/tasker/tasks/" + id,
+        type: "DELETE",
+        data: id,
+        success: success_callback
+      });
     }
   };
 }());

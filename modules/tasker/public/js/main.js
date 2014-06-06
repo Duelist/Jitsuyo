@@ -37,6 +37,7 @@
       $(".current-tasks").append($("<li>")
                            .append($("<div>")
                              .addClass("task")
+                             .attr("data-id", current_task.id)
                              .append(current_task.name)));
     });
 
@@ -50,7 +51,6 @@
 
   function addTaskSuccessCallback(response) {
     getTasksCallback(response);
-    // $(".add-task-form").addClass("hide");
     $("#add_task_modal").modal("hide");
     $("form[name='add_task']").trigger("reset");
   }

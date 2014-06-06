@@ -21,14 +21,12 @@ function getTasks(client, response) {
     var i,
       tasks = [];
 
-    console.log("GET TASKS");
-
     if (task_ids.length === 0) {
       response.send(200, tasks);
     }
 
     for (i = 0; i < task_ids.length; i++) {
-      client.get('tasks:' + task_ids[i], function (err, task) {
+      client.hget('tasks', task_ids[i], function (err, task) {
         tasks.push(task);
 
         if (tasks.length === task_ids.length) {
@@ -41,21 +39,21 @@ function getTasks(client, response) {
 
 function saveTask(task, client, response) {
   client.incr('global:taskID', function (err, id) {
-    client.set('tasks:' + id, JSON.stringify(task), function (err, reply) {
+    task.id = id;
+    client.hset('tasks', id, JSON.stringify(task), function (err, reply) {
       client.rpush('tasklist', id, function (err, reply) {
-        console.log("ADD TASK");
         getTasks(client, response);
       });
     });
   });
 }
 
-function removeTask(id, client) {
-  /*
-  client.lset('tasks', 1, 'deleted', function (err, reply) {
-    console.log("Task " + id + " removed.");
+function removeTask(id, client, response) {
+  client.lrem('tasklist', 1, id, function(err, reply) {
+    client.hdel('tasks', id, function (err, reply) {
+      getTasks(client, response);
+    });
   });
-  */
 }
 
 router.use(function (req, res, next) {
@@ -73,6 +71,10 @@ router.get('/tasks', function (req, res) {
 
 router.post('/tasks', function (req, res) {
   saveTask(req.body, redis_client, res);
+});
+
+router.delete('/tasks/:id', function(req, res) {
+  removeTask(req.params.id, redis_client, res);
 });
 
 app.use('/tasker', router);
