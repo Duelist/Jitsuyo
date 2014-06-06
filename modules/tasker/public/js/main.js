@@ -56,8 +56,9 @@
   }
 
   function addTaskErrorCallback(validation) {
-    _.each(validation, function (error) {
-      console.log(error);
+    $("form[name=add_task] .form-group").removeClass("has-error");
+    _.each(validation.errors, function (error) {
+      $("form[name=add_task] input[name=" + error.field + "]").closest(".form-group").addClass("has-error");
     });
   }
 
