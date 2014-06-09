@@ -48,6 +48,12 @@ function saveTask(task, client, response) {
   });
 }
 
+function getTask(id, client, response) {
+  client.hget('tasks', id, function(err, task) {
+    response.send(200, task);
+  });
+}
+
 function removeTask(id, client, response) {
   client.lrem('tasklist', 1, id, function(err, reply) {
     client.hdel('tasks', id, function (err, reply) {
@@ -71,6 +77,10 @@ router.get('/tasks', function (req, res) {
 
 router.post('/tasks', function (req, res) {
   saveTask(req.body, redis_client, res);
+});
+
+router.get('/tasks/:id', function(req, res) {
+  getTask(req.params.id, redis_client, res);
 });
 
 router.delete('/tasks/:id', function(req, res) {

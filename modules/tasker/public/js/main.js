@@ -34,19 +34,23 @@
 
     _.each(response, function (task) {
       current_task = $.parseJSON(task);
-      $(".current-tasks").append($("<li>")
-                           .append($("<div>")
-                             .addClass("task")
-                             .attr("data-id", current_task.id)
-                             .append(current_task.name)));
+      $(".current-tasks")
+        .append($("<li>")
+          .append($("<div>")
+            .addClass("task")
+            .attr("data-id", current_task.id)
+            .attr("data-toggle", "modal")
+            .attr("data-target", "#add_task_modal")
+            .append(current_task.name)));
     });
 
-    $(".current-tasks").append($("<li>")
-                         .append($("<div>")
-                           .addClass("add-task")
-                           .attr("data-toggle", "modal")
-                           .attr("data-target", "#add_task_modal")
-                           .html("+")));
+    $(".current-tasks")
+      .append($("<li>")
+        .append($("<div>")
+          .addClass("add-task")
+          .attr("data-toggle", "modal")
+          .attr("data-target", "#add_task_modal")
+          .html("+")));
   }
 
   function addTaskSuccessCallback(response) {
@@ -58,8 +62,14 @@
   function addTaskErrorCallback(validation) {
     $("form[name=add_task] .form-group").removeClass("has-error");
     _.each(validation.errors, function (error) {
-      $("form[name=add_task] input[name=" + error.field + "]").closest(".form-group").addClass("has-error");
+      $("form[name=add_task] input[name=" + error.field + "]")
+        .closest(".form-group")
+        .addClass("has-error");
     });
+  }
+
+  function editTaskSuccessCallback(response) {
+    console.log(response);
   }
 
   $(document).ready(function () {
@@ -71,6 +81,12 @@
     });
     $(".timepicker").pickatime();
 
+    $(".current-tasks").on("click", "li", function() {
+      var id = $(this).closest(".task").data("id");
+      // Tasker.getTask(id, editTaskSuccessCallback);
+
+      $(this).closest(".task").click();
+    });
     $(".current-tasks").on("mouseover", ".task", function () {
       $(".task-controls").removeClass("hide");
     });

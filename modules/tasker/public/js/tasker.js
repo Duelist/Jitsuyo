@@ -71,6 +71,22 @@ var Tasker = (function () {
         error_callback(validation);
       }
     },
+    editTask: function (id, task, success_callback) {
+      $.ajax({
+        url: "/tasker/tasks/" + id,
+        type: "POST",
+        data: JSON.stringify(task),
+        contentType: "application/json",
+        success: success_callback
+      });
+    },
+    getTask: function (id, success_callback) {
+      $.ajax({
+        url: "/tasker/tasks/" + id,
+        type: "GET",
+        success: success_callback
+      });
+    },
     removeTask: function (id, success_callback) {
       $.ajax({
         url: "/tasker/tasks/" + id,
