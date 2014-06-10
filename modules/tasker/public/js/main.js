@@ -142,7 +142,9 @@
     });
     $('#add_task_modal').on('hidden.bs.modal', function () {
       $(".delete-task-modal-btn").addClass("hide");
-      $(".edit-task-modal-btn").addClass("hide");
+      $(".save-task-modal-btn").addClass("hide");
+      $(".cancel-task-modal-btn").removeClass("hide");
+      $(".add-task-modal-btn").removeClass("hide");
       $("form[name='add_task']").clearForm();
     });
   });
