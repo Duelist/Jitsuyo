@@ -37,7 +37,13 @@ function getTasks(client, response) {
   });
 }
 
-function saveTask(task, client, response) {
+function getTask(id, client, response) {
+  client.hget('tasks', id, function(err, task) {
+    response.send(200, task);
+  });
+}
+
+function addTask(task, client, response) {
   client.incr('global:taskID', function (err, id) {
     task.id = id;
     client.hset('tasks', id, JSON.stringify(task), function (err, reply) {
@@ -48,9 +54,9 @@ function saveTask(task, client, response) {
   });
 }
 
-function getTask(id, client, response) {
-  client.hget('tasks', id, function(err, task) {
-    response.send(200, task);
+function saveTask(task, client, response) {
+  client.hset('tasks', task.id, JSON.stringify(task), function (err, reply) {
+    getTasks(client, response);
   });
 }
 
@@ -76,11 +82,15 @@ router.get('/tasks', function (req, res) {
 });
 
 router.post('/tasks', function (req, res) {
-  saveTask(req.body, redis_client, res);
+  addTask(req.body, redis_client, res);
 });
 
 router.get('/tasks/:id', function(req, res) {
   getTask(req.params.id, redis_client, res);
+});
+
+router.post('/tasks/:id', function(req, res) {
+  saveTask(req.body, redis_client, res);
 });
 
 router.delete('/tasks/:id', function(req, res) {

@@ -56,6 +56,13 @@ var Tasker = (function () {
         success: success_callback
       });
     },
+    getTask: function (id, success_callback) {
+      $.ajax({
+        url: "/tasker/tasks/" + id,
+        type: "GET",
+        success: success_callback
+      });
+    },
     addTask: function (task, success_callback, error_callback) {
       var validation = validateTask(task);
 
@@ -71,19 +78,12 @@ var Tasker = (function () {
         error_callback(validation);
       }
     },
-    editTask: function (id, task, success_callback) {
+    editTask: function (task, success_callback) {
       $.ajax({
-        url: "/tasker/tasks/" + id,
+        url: "/tasker/tasks/" + task.id,
         type: "POST",
         data: JSON.stringify(task),
         contentType: "application/json",
-        success: success_callback
-      });
-    },
-    getTask: function (id, success_callback) {
-      $.ajax({
-        url: "/tasker/tasks/" + id,
-        type: "GET",
         success: success_callback
       });
     },

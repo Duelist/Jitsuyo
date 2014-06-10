@@ -27,6 +27,32 @@
     return form_json;
   };
 
+  $.fn.populateForm = function (task) {
+    var form_field,
+      form_obj = $(this);
+
+    _.each(task, function (field, key) {
+      if (_.isArray(field)) {
+        _.each(field, function(val) {
+          form_field = $("[name='" + key + "[]'][value='" + val + "']", form_obj);
+          form_field.prop("checked", true).trigger("change");
+        });
+      } else {
+        form_field = $("[name='" + key + "']", form_obj);
+        if (form_field.is(":checkbox")) {
+          form_field.prop("checked", true).trigger("change");
+        } else {
+          form_field.val(task[key]);
+        }
+      }
+    });
+  };
+
+  $.fn.clearForm = function () {
+    $("form[name='add_task']").trigger("reset");
+    $(".task-recurring-details").addClass("hide");
+  };
+
   function getTasksCallback(response) {
     var current_task;
 
@@ -53,10 +79,9 @@
           .html("+")));
   }
 
-  function addTaskSuccessCallback(response) {
+  function refreshTasks(response) {
     getTasksCallback(response);
     $("#add_task_modal").modal("hide");
-    $("form[name='add_task']").trigger("reset");
   }
 
   function addTaskErrorCallback(validation) {
@@ -68,38 +93,57 @@
     });
   }
 
-  function editTaskSuccessCallback(response) {
-    console.log(response);
+  function getTaskSuccessCallback(response) {
+    $("form[name='add_task']").populateForm($.parseJSON(response));
+    $(".delete-task-modal-btn").removeClass("hide");
+    $(".save-task-modal-btn").removeClass("hide");
+    $(".add-task-modal-btn").addClass("hide");
   }
 
   $(document).ready(function () {
 
     // Initialization
-    Tasker.getTasks(getTasksCallback);
     $(".datepicker").pickadate({
       "format": "dd/mm/yyyy"
     });
     $(".timepicker").pickatime();
+    Tasker.getTasks(getTasksCallback);
 
-    $(".current-tasks").on("click", "li", function() {
-      var id = $(this).closest(".task").data("id");
-      // Tasker.getTask(id, editTaskSuccessCallback);
-
-      $(this).closest(".task").click();
+    $(".current-tasks").on("click", "div.task", function () {
+      Tasker.getTask($(this).data("id"), getTaskSuccessCallback);
+      if ($("#task_recurring_checkbox").is(":checked")) {
+        $(".task-recurring-details").removeClass("hide");
+      } else {
+        $(".task-recurring-details").addClass("hide");
+      }
     });
     $(".current-tasks").on("mouseover", ".task", function () {
       $(".task-controls").removeClass("hide");
     });
     $(".add-task-modal-btn").on("click", function () {
       var form_data = $("form[name='add_task']").toJSON();
-      Tasker.addTask(form_data, addTaskSuccessCallback, addTaskErrorCallback);
+      Tasker.addTask(form_data, refreshTasks, addTaskErrorCallback);
+    });
+    $(".save-task-modal-btn").on("click", function () {
+      var form_data = $("form[name='add_task']").toJSON();
+      form_data.id = $("#task_id_input").val();
+      Tasker.editTask(form_data, refreshTasks);
+    });
+    $(".delete-task-modal-btn").on("click", function () {
+      var id = $("#task_id_input").val();
+      Tasker.removeTask(id, refreshTasks)
     });
     $("#task_recurring_checkbox").on("change", function () {
-      if ($("#task_recurring_checkbox:checked").length === 0) {
-        $(".task-recurring-details").addClass("hide");
-      } else {
+      if ($("#task_recurring_checkbox").is(":checked")) {
         $(".task-recurring-details").removeClass("hide");
+      } else {
+        $(".task-recurring-details").addClass("hide");
       }
+    });
+    $('#add_task_modal').on('hidden.bs.modal', function () {
+      $(".delete-task-modal-btn").addClass("hide");
+      $(".edit-task-modal-btn").addClass("hide");
+      $("form[name='add_task']").clearForm();
     });
   });
 }());
