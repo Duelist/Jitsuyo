@@ -1,2 +1,7 @@
 Jitsuyo
 =======
+
+TODO:
+
+- Spreadsheets
+- Budgets
