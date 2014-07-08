@@ -4,4 +4,5 @@ Jitsuyo
 TODO:
 
 - Spreadsheets
-- Budgets
+- Budget module
+- Improve module style in Tasker (function global this)
