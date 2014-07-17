@@ -6,17 +6,21 @@ block head
 
 block css-includes
   include includes/css-includes
+  link(rel = "stylesheet", href = "/static/css/dashboard.css")
 
 block content
-  h1
-    | Dashboard
-  ul
-    li
-      a(href = "/example")
-        | Example
-    li
-      a(href = "/tasker")
-        | Tasker
+  .container
+    .row
+      .col-md-12
+        h1
+          | Dashboard
+        ul
+          li
+            a(href = "/example")
+              | Example
+          li
+            a(href = "/tasker")
+              | Tasker
 
 block js-includes
   include includes/js-includes

@@ -9,15 +9,17 @@ block css-includes
   link(rel = "stylesheet", href = "/static/css/default.css")
   link(rel = "stylesheet", href = "/static/css/default.date.css")
   link(rel = "stylesheet", href = "/static/css/default.time.css")
+  link(rel = "stylesheet", href = "/static/css/tasker.css")
 
 block content
   .container
     .row
-      .col-md-12
+      .text-center.col-md-12
         h1 Tasker
     .row
       .col-md-12
-        h2 Current Tasks
+        .text-center
+          h2 Current Tasks
         ul.current-tasks
         #add_task_modal.modal.fade(tabindex = "-1", role = "dialog", aria-labelledby = "add_task_modal_label", aria-hidden = "true")
           .modal-dialog

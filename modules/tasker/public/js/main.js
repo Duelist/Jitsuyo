@@ -64,6 +64,8 @@
         .append($("<li>")
           .append($("<div>")
             .addClass("task")
+            .addClass("task-list-item")
+            .addClass("text-center")
             .attr("data-id", current_task.id)
             .attr("data-toggle", "modal")
             .attr("data-target", "#add_task_modal")
@@ -74,6 +76,8 @@
       .append($("<li>")
         .append($("<div>")
           .addClass("add-task")
+          .addClass("task-list-item")
+          .addClass("text-center")
           .attr("data-toggle", "modal")
           .attr("data-target", "#add_task_modal")
           .html("+")));
