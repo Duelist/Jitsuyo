@@ -5,4 +5,5 @@ TODO:
 
 - Spreadsheets
 - Budget module
-- Improve module style in Tasker (function global this)
+- RSS reader (example layout: http://hackurls.com/)
+- Improve module style in Tasker (function global this, revealing module pattern)
