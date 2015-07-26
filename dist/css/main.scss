@@ -1,0 +1,23 @@
+html, body {
+  margin: 0px;
+  height: 100%;
+}
+
+.grid-container {
+  height: 100%;
+}
+
+.grid-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 25%;
+}
+
+.grid-column {
+  width: 20%;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  border: 1px dotted;
+}
