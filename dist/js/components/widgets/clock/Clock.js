@@ -9,7 +9,7 @@ class Clock extends React.Component {
   render() {
     let current_time = moment().format('h:mm A');
     return (
-      <div>
+      <div className='grid-component'>
         { current_time }
       </div>
     );

@@ -43553,6 +43553,7 @@
 
 	      for (i = 0; i < this.state.height; i++) {
 	        var row_cols = [];
+
 	        for (j = 0; j < this.state.width; j++) {
 	          var grid_column = _react2['default'].createElement('div', { className: 'grid-column' }),
 	              widget = this.get_widget_at_position(j, i);
@@ -43567,6 +43568,7 @@
 	          }
 	          row_cols.push(grid_column);
 	        }
+
 	        grid_html.push(_react2['default'].createElement(
 	          'div',
 	          { className: 'grid-row' },
@@ -56073,7 +56075,7 @@
 	      var current_time = (0, _momentTimezone2['default'])().format('h:mm A');
 	      return _react2['default'].createElement(
 	        'div',
-	        null,
+	        { className: 'grid-component' },
 	        current_time
 	      );
 	    }
@@ -68325,7 +68327,7 @@
 
 
 	// module
-	exports.push([module.id, "html, body {\n  margin: 0px;\n  height: 100%; }\n\n.grid-container {\n  height: 100%; }\n\n.grid-row {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  height: 25%; }\n\n.grid-column {\n  width: 20%;\n  box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  border: 1px dotted; }\n", ""]);
+	exports.push([module.id, "html, body {\n  margin: 0px;\n  height: 100%; }\n\n.grid-container {\n  height: 100%; }\n\n.grid-row {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  height: 25%; }\n\n.grid-column {\n  display: table;\n  width: 20%;\n  height: 100%;\n  box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  border: 1px dotted; }\n\n.grid-component {\n  display: table-cell;\n  vertical-align: middle;\n  text-align: center; }\n", ""]);
 
 	// exports
 

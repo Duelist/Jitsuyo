@@ -52,6 +52,7 @@ class GridPage extends React.Component {
 
     for (i = 0; i < this.state.height; i++) {
       let row_cols = [];
+
       for (j = 0; j < this.state.width; j++) {
         let grid_column = <div className='grid-column'></div>,
             widget = this.get_widget_at_position(j, i);
@@ -62,6 +63,7 @@ class GridPage extends React.Component {
         }
         row_cols.push(grid_column);
       }
+
       grid_html.push(
         <div className='grid-row'>
           { row_cols }

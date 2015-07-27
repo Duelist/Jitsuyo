@@ -15,9 +15,17 @@ html, body {
 }
 
 .grid-column {
+  display: table;
   width: 20%;
+  height: 100%;
   box-sizing:border-box;
   -moz-box-sizing:border-box;
   -webkit-box-sizing:border-box;
   border: 1px dotted;
+}
+
+.grid-component {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
 }
